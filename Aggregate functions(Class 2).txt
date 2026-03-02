@@ -72,13 +72,13 @@ SELECT Name FROM Student WHERE Marks=
 24>Show the Marks with the 3rd minimum marks
 SELECT MIN(Marks) FROM Student WHERE Marks>
 (SELECT MIN(Marks) FROM Student WHERE Marks>
-(SELECT MIN(Marks) FROM Student WHERE Marks));
+(SELECT MIN(Marks) FROM Student ));
 
 25>Show the Name with the 3rd minimum marks
 SELECT Name FROM Student WHERE Marks=
 (SELECT MIN(Marks) FROM Student WHERE Marks
 >(SELECT MIN(Marks) FROM Student WHERE Marks
->(SELECT MIN(Marks) FROM Student WHERE Marks)));
+>(SELECT MIN(Marks) FROM Student )));
 
 Age calculated:-
 1>SELECT (SYSDATE - DOB) FROM Student;           -- Difference in days (with decimal)
@@ -99,6 +99,7 @@ SELECT MIN(TRUNC(TRUNC(SYSDATE-DOB)/365)) FROM Student;
 8>New student Name
 SELECT Name FROM Student WHERE TRUNC(TRUNC(SYSDATE-DOB)/365))
 =(SELECT MIN(TRUNC(TRUNC(SYSDATE-DOB)/365)) FROM Student);
+
 
 
 
