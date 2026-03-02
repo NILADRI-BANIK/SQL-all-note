@@ -1,0 +1,54 @@
+i>ALTER operation:-
+Add a new column 
+
+1>Add a new column like PHN_no
+ALTER TABLE Student ADD PHN_no NUMBER(10);
+2>Value inserted in row
+UPDATE Student SET PHN_no=9330320056 WHERE SID='S1';
+UPDATE Student SET PHN_no=6789054321 WHERE SID='S2';
+UPDATE Student SET PHN_no=7890654321 WHERE SID='S3';
+UPDATE Student SET PHN_no=5678904321 WHERE SID='S4';
+UPDATE Student SET PHN_no=9908765432 WHERE SID='S5';
+UPDATE Student SET PHN_no=8890765432 WHERE SID='S6';
+3>Delete the PHN_no column
+ALTER TABLE Student DROP COLUMN PHN_no;
+4>Modify the column size
+ALTER TABLE Student MODIFY SID VARCHAR(7);[Only incress]
+
+ii>Name change
+5>Show the column id SID TO STUDENT ID
+SELECT SID "STUDENT ID" FROM STUDENT;
+6>Show the selected column in one column
+SELECT (SID||' '||Name||' '||Marks) FROM Student;
+7>Show the selected column in one column proper name like "Student name"
+SELECT (SID||' '||Name||' '||Marks) "Student name" FROM STUDENT;
+
+iii>OR operator
+Show the person who lives in Lake Town or Borat
+SELECT Name FROM Student WHERE City ="Lake Town" OR City ="Borat";
+
+iv>IN operator
+Show the person who lives in Lake Town, or Borat, or Dum Dum
+SELECT Name FROM Student WHERE City IN('Lake Town','Borat','Dum Dum');
+
+iv>NOT IN operator
+1>Show the person who does not live in Lake Town or Borat
+SELECT Name FROM Student WHERE City NOT IN ('Lake Town','Borat');
+
+
+v>Not equal operator
+1>Show the person who NOT lives in Lake Town
+SELECT Name FROM Student WHERE City!='Lake Town';
+SELECT Name FROM Student WHERE City<> 'Lake Town';
+
+
+
+
+
+
+
+
+
+
+
+

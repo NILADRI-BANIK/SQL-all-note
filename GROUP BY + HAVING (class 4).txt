@@ -1,0 +1,56 @@
+GROUP BY + HAVING
+
+i>GROUP BY Statement
+The GROUP BY statement groups rows that have the same values into summary rows.
+It is often used with aggregate functions (COUNT(), MAX(), MIN(), SUM(), AVG()) to group the result-set by one or more columns.
+
+Syntax:-
+SELECT column_name(s)
+FROM table_name
+GROUP BY column_name(s);
+
+Create table payment:-
+CREATE TABLE payment
+(
+    customer_id NUMBER(3) PRIMARY KEY,
+    amount NUMBER(3),
+    mode VARCHAR(50),
+    payment_date DATE
+);
+INSERT INTO payment VALUES (1, 60, 'Cash', '24-09-2020');
+INSERT INTO payment VALUES (2, 30, 'Credit Card', '27-04-2020');
+INSERT INTO payment VALUES (3, 90, 'Credit Card', '07-07-2020');
+INSERT INTO payment VALUES (4, 50, 'Debit Card', '12-02-2020');
+INSERT INTO payment VALUES (5, 40, 'Mobile Payment', '20-11-2020');
+INSERT INTO payment VALUES (6, 40, 'Debit Card', '28-06-2021');
+INSERT INTO payment VALUES (7, 10, 'Cash', '25-08-2021');
+SELECT * FROM payment;
+
+1>GROUP BY the sum of the amount(total amount of money):-
+SELECT mode, SUM(amount) AS TOTAL FROM payment GROUP BY mode ORDER BY total;
+
+ii>HAVING Clause
+The HAVING clause is used to apply a filter on the result of GROUP BY based on the specified condition.
+The WHERE clause places conditions on the selected columns, whereas the HAVING clause places conditions on groups created by the GROUP BY clause.
+
+Syntax:-
+SELECT column_name(s)
+FROM table_name
+WHERE condition(s)
+GROUP BY column_name(s)
+HAVING condition(s)
+
+1>Show only the total transformation mode count those who are >1
+SELECT mode,COUNT(amount) AS TOTAL 
+FROM payment 
+GROUP BY mode 
+HAVING COUNT(amount)>=2
+ORDER BY total DESC;
+
+2>Show only the total transformation mode count those who are >1 and who are <4
+SELECT mode,COUNT(amount) AS TOTAL
+FROM payment
+GROUP BY mode
+HAVING COUNT(amount)>=2 AND COUNT(amount)<4
+ORDER BY total DESC;
+

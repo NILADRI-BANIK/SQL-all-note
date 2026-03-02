@@ -1,0 +1,229 @@
+SQL JOIN
+
+1>JOIN means to combine something.
+2>A JOIN clause is used to combine data from two or more tables, based on a related column between them
+
+Type of JOIN:-
+i>INNER JOIN: Returns records that have matching values in both tables
+
+┌─────────┐   ┌─────────┐
+│         │   │         │
+│    A    │░░░│    B    │
+│         │░░░│         │
+└─────────┘   └─────────┘
+     ▲░░░░░░░░░▲
+     └───INNER──┘
+Returns only matching records from both tables
+
+customer:-
+CREATE TABLE customer
+(
+    customer_id NUMBER(1) PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    address_id NUMBER(1)
+);
+
+INSERT INTO customer VALUES (1, 'Mary', 'Smith', 5);
+INSERT INTO customer VALUES (2, 'Madan', 'Mohan', 6);
+INSERT INTO customer VALUES (3, 'Linda', 'Williams', 7);
+INSERT INTO customer VALUES (4, 'Barbara', 'Jones', 8);
+INSERT INTO customer VALUES (5, 'Elizabeth', 'Brown', 9);
+
+SELECT * FROM customer;
+
+payment:-
+CREATE TABLE payment
+(
+    customer_id NUMBER(2) PRIMARY KEY,
+    amount NUMBER(2),
+    mode VARCHAR2(15),
+    payment_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
+);
+
+INSERT INTO payment VALUES (1, 60, 'Cash', '24-09-2020');
+INSERT INTO payment VALUES (2, 30, 'Credit Card', '27-04-2020');
+INSERT INTO payment VALUES (3, 90, 'Credit Card', '07-07-2020');
+INSERT INTO payment VALUES (4, 50, 'Debit Card', '12-02-2020');
+INSERT INTO payment VALUES (5, 40, 'Mobile Payment', '20-11-2020');
+
+SELECT * FROM payment;
+
+1>INNER JOIN:- Join 2 tables in this case, and show the full big table:-
+SELECT * FROM Customer 
+AS C INNER JOIN Payment AS P 
+ON C.customer_id = P.customer_id;
+
+2>Join 2 table show only first_name, amount, mode:-
+SELECT C.first_name, P.amount, P.mode 
+FROM Customer AS C 
+INNER JOIN Payment AS P
+ON C.customer_id=P.customer_id;
+
+ii>LEFT JOIN: Returns all records from the left table, and the matched records from the right table.
+
+┌─────────┐   ┌─────────┐
+│░░░░░░░░░│   │         │
+│░░░A░░░░░│░░░│    B    │
+│░░░░░░░░░│   │         │
+└─────────┘   └─────────┘
+     ▲░░░░░░░░░▲
+     └───LEFT───┘
+Returns all records from left table (A), matching from right (B)
+
+customer:-
+CREATE TABLE customer
+(
+    customer_id NUMBER(1) PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    address_id NUMBER(1)
+);
+INSERT INTO customer VALUES (1, 'Mary', 'Smith', 5);
+INSERT INTO customer VALUES (2, 'Madan', 'Mohan', 6);
+INSERT INTO customer VALUES (3, 'Linda', 'Williams', 7);
+INSERT INTO customer VALUES (4, 'Barbara', 'Jones', 8);
+INSERT INTO customer VALUES (5, 'Elizabeth', 'Brown', 9);
+
+SELECT * FROM customer;
+
+payment:-
+CREATE TABLE payment
+(
+    customer_id NUMBER(2) PRIMARY KEY,
+    amount NUMBER(2),
+    mode VARCHAR2(15),
+    payment_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
+);
+
+INSERT INTO payment VALUES (1, 60, 'Cash', '24-09-2020');
+INSERT INTO payment VALUES (2, 30, 'Credit Card', '27-04-2020');
+
+SELECT * FROM payment;
+
+LEFT JOIN:- Join 2 tables in this case, and show the left is full data:-
+SELECT * FROM 
+Customer AS C LEFT JOIN Payment AS P
+ON C.customer_id=P.customer_id;
+
+iii>RIGHT JOIN: Returns all records from the right table, and the matched records from the left table
+
+┌─────────┐   ┌─────────┐
+│         │   │░░░░░░░░░│
+│    A    │░░░│░░░B░░░░░│
+│         │   │░░░░░░░░░│
+└─────────┘   └─────────┘
+     ▲░░░░░░░░░▲
+     └───RIGHT──┘
+Returns all records from right table (B), matching from left (A)
+
+customer:-
+CREATE TABLE customer
+(
+    customer_id NUMBER(1) PRIMARY KEY,
+    first_name VARCHAR2(15),
+    last_name VARCHAR2(15),
+    address_id NUMBER(1)
+);
+INSERT INTO customer VALUES (1, 'Mary', 'Smith', 5);
+INSERT INTO customer VALUES (2, 'Madan', 'Mohan', 6);
+INSERT INTO customer VALUES (3, 'Linda', 'Williams', 7);
+INSERT INTO customer VALUES (4, 'Barbara', 'Jones', 8);
+INSERT INTO customer VALUES (5, 'Elizabeth', 'Brown', 9);
+
+payment:-
+CREATE TABLE payment
+(
+    payment_id NUMBER(3) PRIMARY KEY,
+    customer_id NUMBER(1),
+    amount NUMBER(5),
+    mode VARCHAR2(15),
+    payment_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
+);
+INSERT INTO payment VALUES (101, 1, 60, 'Cash', '24-09-2020');
+INSERT INTO payment VALUES (102, 2, 30, 'Credit Card', '27-04-2020');
+
+RIGHT JOIN:- Join 2 tables in this case, and show the right is full data:-
+SELECT * FROM
+Customer AS C RIGHT JOIN Payment AS P
+ON C.customer_id=P.customer_id;
+
+FULL JOIN:- Returns all records when there is a match in either the left or right table
+
+┌─────────┐   ┌─────────┐
+│░░░░░░░░░│   │░░░░░░░░░│
+│░░░A░░░░░│░░░│░░░B░░░░░│
+│░░░░░░░░░│   │░░░░░░░░░│
+└─────────┘   └─────────┘
+     ▲░░░░░░░░░▲
+     └───FULL───┘
+Returns all records from both tables
+
+JOIN both tables  
+SELECT * FROM
+Customer AS C FULL OUTER JOIN Payment AS P
+ON C.customer_id=P.customer_id;
+
+iv>SELF JOIN:- A self-join is a regular join in which a table is joined to itself.
+SELF Joins are powerful for comparing values across rows in the same table.
+┌─────────┐
+│    A    │
+│    ▲    │
+│    └────┘
+│  (joined with itself)
+└─────────┘
+Table joined with itself
+
+employee:-
+CREATE TABLE employee
+(
+    empid NUMBER(2) PRIMARY KEY,
+    empname VARCHAR2(50),
+    manager_id NUMBER(2)
+);
+
+INSERT INTO employee VALUES (1, 'Agni', 3);
+INSERT INTO employee VALUES (2, 'Akash', 4);
+INSERT INTO employee VALUES (3, 'Dharti', 2);
+INSERT INTO employee VALUES (4, 'Vayu', 3);
+
+SELECT * FROM employee;
+
+1>Connect empid to manager_id(Show full table):-
+SELECT * FROM
+Employee AS E1
+JOIN Employee AS E2
+ON E2.empid=E1.manager_id;
+
+2>Connect empid to manager_id(Show only emp_name):-
+SELECT E1.empname AS emp_name, E2.empname AS emp_name FROM 
+Employee AS E1
+JOIN Employee AS E2
+ON E2.empid=E1.manager_id;
+
+v>UNION JOIN:- (Ignore the duplicate data)
+1>The same number of columns selected and expressions
+2>The same data type and
+3>Have them in the same order
+
+SELECT cust_name, cust_amount
+FROM custA UNION
+SELECT cust_name, cust_amount
+FROM custB
+
+vi>UNION ALL JOIN:- (Do not ignore the duplicate data)
+SELECT cust_name, cust_amount
+FROM custA
+UNION ALL
+SELECT cust_name, cust_amount
+FROM custB;
+
+
+
+
+
+
+

@@ -1,0 +1,104 @@
+i>Aggregate functions
+
+1>MAX
+SELECT MAX(Marks) FROM Student;
+2>MIN
+SELECT MIN(Marks) FROM Student;
+3>SUM
+SELECT SUM(Marks) FROM Student;
+4>AVG
+SELECT AVG(Marks) FROM Student;
+5>COUNT
+SELECT COUNT(*) FROM Student;
+6>COUNT
+SELECT COUNT(SID) FROM Student;
+
+7>SELECT POWER(5,2) FROM DUAL;
+-- Output: 25
+8>SELECT ABS(-6) FROM DUAL;
+-- Output: 6
+9>SELECT SQRT(100) FROM DUAL;
+-- Output: 10
+10>SELECT SYSDATE FROM DUAL;
+-- Output: 21-FEB-26
+11>SELECT EXTRACT(MONTH FROM SYSDATE) FROM DUAL;
+-- Output: 2
+12>SELECT EXTRACT(YEAR FROM SYSDATE) FROM DUAL;
+-- Output: 26
+13>SELECT EXTRACT(DAY FROM SYSDATE) FROM DUAL;
+-- Output: 21
+
+14>Show bron in August
+SELECT Name FROM Student WHERE EXTRACT(MONTH FROM DOB) = 8;
+15>Show bron in 2009
+SELECT Name FROM Student WHERE EXTRACT(YEAR FROM DOB) = 2009;
+Or
+SELECT Name FROM Student WHERE DOB BETWEEN '01-JAN-2009' AND '31-DEC-2009';
+Or
+SELECT Name FROM Student WHERE DOB LIKE '%09';
+
+16>Show the details whose name has A in any place
+SELECT Name FROM Student WHERE Name LIKE '%A%';
+
+17>Show the name with the maximum marks
+SELECT Name FROM Student WHERE Marks=(SELECT MAX(Marks) FROM Student);
+
+18>Show the name with the minimum marks
+SELECT Name FROM Student WHERE Marks=(SELECT MIN(Marks) FROM Student); 
+
+19>Show the Marks with the 2nd maximum marks
+SELECT MAX(Marks) FROM Student WHERE Marks<(SELECT MAX(Marks) from Student);
+
+20>Show the Marks with the 2nd minimum marks
+SELECT MIN(MARKS) FROM Student WHERE Marks>(SELECT MIN(Marks) FROM Student);
+
+21>Show the Name with the 2nd maximum marks
+SELECT Name FROM Student WHERE Marks=(SELECT MAX(Marks) FROM Student WHERE Marks<(SELECT MAX(Marks) from Student));
+
+22>Show the Name with the 2nd minimum marks
+SELECT Name FROM Student WHERE Marks=(SELECT MIN(Marks) FROM Student WHERE Marks>(SELECT MIN(Marks) from Student));
+
+23>Show the marks with the 3rd maximum marks
+SELECT MAX(Marks) FROM Student WHERE Marks<
+(SELECT MAX(Marks) FROM Student WHERE Marks<
+(SELECT MAX(Marks) FROM Student));
+
+Bonus:- Show the Name with the 3rd maximum marks
+SELECT Name FROM Student WHERE Marks=
+(SELECT MAX(Marks) FROM Student WHERE Marks<
+(SELECT MAX(Marks) FROM Student WHERE Marks<
+(SELECT MAX(Marks) FROM Student )));
+
+24>Show the Marks with the 3rd minimum marks
+SELECT MIN(Marks) FROM Student WHERE Marks>
+(SELECT MIN(Marks) FROM Student WHERE Marks>
+(SELECT MIN(Marks) FROM Student WHERE Marks));
+
+25>Show the Name with the 3rd minimum marks
+SELECT Name FROM Student WHERE Marks=
+(SELECT MIN(Marks) FROM Student WHERE Marks
+>(SELECT MIN(Marks) FROM Student WHERE Marks
+>(SELECT MIN(Marks) FROM Student WHERE Marks)));
+
+Age calculated:-
+1>SELECT (SYSDATE - DOB) FROM Student;           -- Difference in days (with decimal)
+2>SELECT TRUNC(SYSDATE - DOB) FROM Student;      -- Difference in days (whole number)
+3>SELECT TRUNC(SYSDATE-DOB)/365 FROM Student;
+4>SELECT TRUNC(TRUNC(SYSDATE-DOB)/365) FROM Student;
+
+5>Oldest student
+SELECT MAX(TRUNC(TRUNC(SYSDATE-DOB)/365)) FROM Student;
+
+6>Oldest student Name
+SELECT Name FROM Student WHERE TRUNC(TRUNC(SYSDATE-DOB)/365))=
+(SELECT MAX(TRUNC(TRUNC(SYSDATE-DOB)/365)) FROM Student);
+
+7>New student
+SELECT MIN(TRUNC(TRUNC(SYSDATE-DOB)/365)) FROM Student;
+
+8>New student Name
+SELECT Name FROM Student WHERE TRUNC(TRUNC(SYSDATE-DOB)/365))
+=(SELECT MIN(TRUNC(TRUNC(SYSDATE-DOB)/365)) FROM Student);
+
+
+

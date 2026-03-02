@@ -1,0 +1,106 @@
+Window functions
+i>Window functions apply aggregate, ranking and analytic functions over a particular window (set of rows).
+ii>And the OVER clause is used with window functions to define that window.
+
+┌─────────────────────────────────────────────────────────────────┐
+│                       WINDOW FUNCTIONS                          │
+│                      OVER() CLAUSE                              │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+        ┌─────────────────────┼─────────────────────┐
+        │                     │                     │
+        ▼                     ▼                     ▼
+┌───────────────┐    ┌───────────────┐    ┌───────────────┐
+│   AGGREGATE   │    │    RANKING    │    │  VALUE/ANALYTIC│
+│   FUNCTIONS   │    │   FUNCTIONS   │    │   FUNCTIONS    │
+└───────────────┘    └───────────────┘    └───────────────┘
+        │                     │                     │
+        ▼                     ▼                     ▼
+┌───────────────┐    ┌───────────────┐    ┌───────────────┐
+│ • SUM         │    │ • ROW_NUMBER  │    │ • LEAD        │
+│ • AVG         │    │ • RANK        │    │ • LAG         │
+│ • COUNT       │    │ • DENSE_RANK  │    │ • FIRST_VALUE │
+│ • MIN         │    │ • PERCENT_RANK│    │ • LAST_VALUE  │
+│ • MAX         │    │               │    │               │
+└───────────────┘    └───────────────┘    └───────────────┘
+
+1. AGGREGATE FUNCTIONS:- 
+CREATE TABLE test_data
+(
+	new_id NUMBER(3),
+	new_cat VARCHAR2(10)
+);
+
+INSERT INTO test_data VALUES (100, 'Agni');
+INSERT INTO test_data VALUES (200, 'Agni');
+INSERT INTO test_data VALUES (500, 'Dharti');
+INSERT INTO test_data VALUES (700, 'Dharti');
+INSERT INTO test_data VALUES (200, 'Vayu');
+INSERT INTO test_data VALUES (300, 'Vayu');
+INSERT INTO test_data VALUES (500, 'Vayu');
+
+SELECT * FROM test_data;
+
+Sum, Avg, COUNT, MIN, MAX of new_id:-
+SELECT new_id,new_cat,
+SUM(new_id) OVER(PARTITION BY new_cat ORDER BY new_id)AS "TOTAL",
+AVG(new_id) OVER(PARTITION BY new_cat ORDER BY new_id)AS "Average",
+COUNT(new_id) OVER(PARTITION BY  new_cat ORDER BY new_id)AS "COUNT",
+MIN(new_id) OVER(PARTITION BY new_cat ORDER BY new_id)AS "Min",
+MAX(new_id) OVER(PARTITION BY new_cat ORDER BY new_ID)AS "Max" 
+FROM Test_data;
+
+2. RANKING FUNCTIONS:- 
+CREATE TABLE DEMO_DATA
+(
+	new_id NUMBER(3)
+);
+INSERT INTO DEMO_DATA VALUES(100);
+INSERT INTO DEMO_DATA VALUES(200);
+INSERT INTO DEMO_DATA VALUES(200);
+INSERT INTO DEMO_DATA VALUES(300);
+INSERT INTO DEMO_DATA VALUES(500);
+INSERT INTO DEMO_DATA VALUES(500);
+INSERT INTO DEMO_DATA VALUES(700);
+
+SELECT * FROM DEMO_DATA;
+
+ROW_NUMBER(), RANK(), DENSE_RANK(), PERCENT_RANK() of new_id:-
+SELECT new_id, 
+ROW_NUMBER() OVER(ORDER BY new_id)AS "DEMO DATA",
+RANK() OVER(ORDER BY new_id)AS "RANK",
+DENSE_RANK() OVER(ORDER BY new_id)AS "DENSE_RANK",
+PERCENT_RANK() OVER(ORDER BY new_id)AS "PERCENT_RANK" 
+FROM DEMO_DATA;
+
+3. VALUE/ANALYTIC FUNCTIONS:-
+LEAD, LAG, FIRST_VALUE, LAST_VALUE of new_id:-
+SELECT new_id,
+FIRST_VALUE(new_id) OVER(ORDER BY new_id)AS "1st value",
+LAST_VALUE(new_id) OVER(ORDER BY new_id)AS "Last values",
+LEAD(new_id) OVER(ORDER BY new_id)AS "LEAD",
+LAG(new_id) OVER(ORDER BY new_id)AS "LAG" 
+FROM DEMO_DATA;
+
+Most important for cracking company exams:
+1. ROW_NUMBER()
+2. RANK()
+3. DENSE_RANK()
+4. LEAD()
+5. LAG()
+6. SUM()
+7. AVG()
+
+Question:-
+Offset the LEAD and LAG values by 2 in the output columns?
+SELECT new_id,
+LEAD(new_id,2) OVER(ORDER BY new_id)AS "LEAD",
+LAG(new_id,2) OVER(ORDER BY new_id)AS "LAG"
+FROM DEMO_DATA;
+
+
+
+
+
+
+

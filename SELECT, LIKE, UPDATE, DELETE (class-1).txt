@@ -1,0 +1,108 @@
+Delete table:-
+DROP TABLE STUDENT;
+
+Create table:-
+CREATE TABLE STUDENT
+(
+  SID VARCHAR2(3) PRIMARY KEY,
+  Name VARCHAR2(10),
+  Marks INT(3),
+  City VARCHAR2(5),
+  DOB DATE
+);
+
+Multiple primary key in a table:-
+CREATE TABLE STUDENT
+(
+  SID VARCHAR2(3),
+  Name VARCHAR2(10),
+  Marks INT(3),
+  City VARCHAR2(5),
+  DOB DATE,
+  PRIMARY KEY(SID,DOB)//Composite primary key
+);
+
+Table exists or not:-
+DESC STUDENT;
+
+INSERT values:-
+INSERT INTO STUDENT VALUES('S1','Nil','80','Lake Town','02-AUG-2001');
+INSERT INTO STUDENT VALUES('S2','Nimo','30','Kolkata','09-AUG-2009');
+INSERT INTO STUDENT VALUES('S3','Anik','50','Dum Dum','22-AUG-2001');
+INSERT INTO STUDENT VALUES('S4','Anu','100','Borat','30-AUG-2001');
+INSERT INTO STUDENT VALUES('S5','Raj','80','Lake Town','07-SEP-2001');
+INSERT INTO STUDENT VALUES('S6','Nilx','70','Lake Town','02-DEC-2001');
+
+Show all values:-
+SELECT * FROM STUDENT;
+
+
+i>SELECT operation:-
+
+Show only one value(colume):-
+SELECT SID FROM STUDENT;
+SELECT Name FROM STUDENT;
+SELECT Marks FROM STUDENT;
+SELECT City FROM STUDENT;
+SELECT DOB FROM STUDENT;
+
+Show only specitic value(colume):-
+SELECT City, DOB FROM STUDENT;
+
+Clause in DBMS:-
+1>Condition shows all details of those who have more than 70 marks?
+SELECT * FROM STUDENT WHERE Marks >70;
+2>Condition shows the name who has more than 70 marks?
+SELECT Name FROM STUDENT WHERE Marks >70;
+
+And operator use:-
+1>Condition shows all details of those who have more than 70 marks but less than 90?
+SELECT * FROM STUDENT WHERE Marks >70 AND Marks <90;
+2>Condition shows the name of those who have more than 70 marks but less than 90?
+SELECT Name FROM STUDENT WHERE Marks >70 AND Marks <90;
+3>Condition shows all details of those who have more than or equal to 70 marks but less than or equal 90?
+SELECT * FROM STUDENT WHERE Marks >=70 AND Marks <=90;
+4>Condition shows the name of those who have more than or equal to 70 marks but less than or equal 90?
+SELECT Name FROM STUDENT WHERE Marks >=70 AND Marks <=90;
+
+Between operator use:-
+1>Condition shows all details of those who have more than or equal to 70 marks but less than or equal 90?
+SELECT * FROM STUDENT WHERE Marks BETWEEN 70 AND 90;
+2>Condition shows the name of those who have more than or equal to 70 marks but less than or equal 90?
+SELECT Name FROM STUDENT WHERE Marks BETWEEN 70 AND 90;
+
+Like Clause use:-
+1>Start with 'A' Name. 
+SELECT Name FROM STUDENT WHERE Name LIKE 'A%';
+2>End with 'x' Name.
+SELECT Name FROM STUDENT WHERE Name LIKE '%x';
+3>Anywhere with 'k' Name.
+SELECT Name FROM STUDENT WHERE Name LIKE '%k%';
+4>Show only name middle 'i' but not first 'N'
+SELECT Name FROM STUDENT WHERE Name LIKE '%I%' AND Name NOT LIKE 'N%';
+5>Show only the name who 3rd character 'i'
+SELECT Name FROM STUDENT WHERE Name LIKE '%i__';
+6>Show only the name who 2nd character 'n'
+SELECT Name FROM STUDENT WHERE Name LIKE '_n%';
+
+ii>UPDATE operation:-
+
+1>UPDATE the mark S1 has 99
+UPDATE STUDENT SET Marks =99 WHERE SID='S1';
+2>UPDATE the mark S4 has 99
+UPDATE STUDENT SET Marks =90 WHERE SID='S4';
+3>UPDATE the mark 12 and the name Ram where in S5
+UPDATE STUDENT SET Marks =12 , Name ='Ram' WHERE SID='S5';
+4>UPDATE THE City = GB road and name = Sayan Where in S6
+UPDATE STUDENT SET City ='GB raod ', Name='Sayan' WHERE SID='S6';
+ 
+iii>UPDATE operation:-
+1>DELETE all the values of the table
+DELETE FROM STUDENT;
+2>DELETE only the row 'S6'
+DELETE FROM STUDENT WHERE SID = 'S6';
+3>DELETE only the persons who have marks>=30 and marks<80
+DELETE FROM STUDENT WHERE Marks>=30 AND Marks<80;
+
+DELETE:-DELETE the Record
+DROP:-DELETE the TABLE
