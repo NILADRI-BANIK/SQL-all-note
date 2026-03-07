@@ -11,7 +11,7 @@ i>INNER JOIN: Returns records that have matching values in both tables
 │    A    │░░░│    B    │
 │         │░░░│         │
 └─────────┘   └─────────┘
-     ▲░░░░░░░░░▲
+     ▲░░░░░░░░░ ▲
      └───INNER──┘
 Returns only matching records from both tables
 
@@ -117,7 +117,20 @@ iii>RIGHT JOIN: Returns all records from the right table, and the matched record
 └─────────┘   └─────────┘
      ▲░░░░░░░░░▲
      └───RIGHT──┘
-Returns all records from right table (B), matching from left (A)
+Returns all records from the right table (B), matching from left (A)
+
+payment:-
+CREATE TABLE payment
+(
+    payment_id NUMBER(3) PRIMARY KEY,
+    customer_id NUMBER(1),
+    amount NUMBER(5),
+    mode VARCHAR2(15),
+    payment_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
+);
+INSERT INTO payment VALUES (101, 1, 60, 'Cash', '24-09-2020');
+INSERT INTO payment VALUES (102, 2, 30, 'Credit Card', '27-04-2020');
 
 customer:-
 CREATE TABLE customer
@@ -132,19 +145,6 @@ INSERT INTO customer VALUES (2, 'Madan', 'Mohan', 6);
 INSERT INTO customer VALUES (3, 'Linda', 'Williams', 7);
 INSERT INTO customer VALUES (4, 'Barbara', 'Jones', 8);
 INSERT INTO customer VALUES (5, 'Elizabeth', 'Brown', 9);
-
-payment:-
-CREATE TABLE payment
-(
-    payment_id NUMBER(3) PRIMARY KEY,
-    customer_id NUMBER(1),
-    amount NUMBER(5),
-    mode VARCHAR2(15),
-    payment_date DATE,
-    FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
-);
-INSERT INTO payment VALUES (101, 1, 60, 'Cash', '24-09-2020');
-INSERT INTO payment VALUES (102, 2, 30, 'Credit Card', '27-04-2020');
 
 RIGHT JOIN:- Join 2 tables in this case, and show the right is full data:-
 SELECT * FROM
@@ -220,10 +220,3 @@ FROM custA
 UNION ALL
 SELECT cust_name, cust_amount
 FROM custB;
-
-
-
-
-
-
-
