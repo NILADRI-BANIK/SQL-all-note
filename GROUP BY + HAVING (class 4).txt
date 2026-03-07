@@ -41,16 +41,13 @@ GROUP BY column_name(s)
 HAVING condition(s)
 
 1>Show only the total transformation mode count those who are >1
-SELECT mode,COUNT(amount) AS TOTAL 
-FROM payment 
-GROUP BY mode 
-HAVING COUNT(amount)>=2
-ORDER BY total DESC;
+
+SELECT mode, COUNT(mode) AS TOTAL 
+FROM Payment GROUP BY mode
+HAVING COUNT(mode)>=2
+ORDER BY TOTAL DESC;
 
 2>Show only the total transformation mode count those who are >1 and who are <4
-SELECT mode,COUNT(amount) AS TOTAL
-FROM payment
-GROUP BY mode
-HAVING COUNT(amount)>=2 AND COUNT(amount)<4
-ORDER BY total DESC;
-
+SELECT mode, COUNT(mode) AS TOTAL FROM Payment GROUP BY mode
+HAVING COUNT(mode)>1 AND COUNT(mode)<4
+ORDER BY TOTAL DESC;
